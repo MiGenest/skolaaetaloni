@@ -1,72 +1,103 @@
 import { Link } from "react-router-dom"
+import { useState } from "react"
 
-export default function Navbar() {
+export default function NavBar() {
+  const [dropdownOpen, setDropdownOpen] = useState<string | null>(null)
+
+  const menuItems = [
+    {
+      name: "სკოლის შესახებ",
+      key: "about",
+      links: [
+        { name: "ისტორია", href: "/about/history" },
+        { name: "მისია და ხედვა", href: "/about/mission" },
+        { name: "ჰიმნი და გერბი", href: "/about/symbol" },
+        { name: "ადმინისტრაცია", href: "/about/admin" },
+      ],
+    },
+    {
+      name: "სასწავლო პროცესი",
+      key: "education",
+      links: [
+        { name: "კლასები", href: "/education/classes" },
+        { name: "კათედრები", href: "/education/departments" },
+      ],
+    },
+    {
+      name: "დოკუმენტაცია",
+      key: "docs",
+      links: [
+        { name: "სასწავლო წელი", href: "/documents/year" },
+        { name: "ფორმები", href: "/documents/forms" },
+      ],
+    },
+    {
+      name: "რესურსები",
+      key: "resources",
+      links: [
+        { name: "ბიბლიოთეკა", href: "/resources/library" },
+        { name: "პროექტები", href: "/resources/projects" },
+      ],
+    },
+  ]
+
   return (
-    <nav className="bg-gradient-to-r from-green-700 to-green-800 shadow-lg px-8 py-5 flex justify-between items-center border-b-4 border-yellow-500">
-      
-      {/* LOGO */}
-      <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
-        <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center text-green-800 font-bold text-lg shadow-md">ე</div>
-        <div>
-          <h1 className="font-bold text-xl text-white">სკოლა ეტალონი</h1>
-          <p className="text-xs text-green-100">რეგიონის წამყვანი სკოლა</p>
+    <header className="w-full bg-white border-b shadow-sm sticky top-0 z-50">
+      <div className="w-full px-10 py-3 flex items-center justify-between">
+
+        {/* Logo */}
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-gray-200 rounded-full" />
+          <span className="text-lg font-semibold text-gray-800">
+            სკოლა ეტალონი
+          </span>
         </div>
-      </Link>
 
-      {/* MENU */}
-      <ul className="flex gap-8 text-white items-center font-medium">
+        {/* Menu */}
+        <nav className="flex items-center gap-8 text-gray-700 text-sm font-medium">
 
-        <li>
-          <Link to="/" className="hover:text-yellow-300 transition-colors duration-200 border-b-2 border-transparent hover:border-yellow-300">
+          <Link to="/" className="hover:text-blue-600 transition">
             მთავარი
           </Link>
-        </li>
 
-        {/* სკოლა DROPDOWN */}
-        <li className="relative group cursor-pointer">
-          <span className="hover:text-yellow-300 transition-colors duration-200 border-b-2 border-transparent group-hover:border-yellow-300 pb-1">სკოლა</span>
+          {menuItems.map(({ name, key, links }) => (
+            <div
+              key={key}
+              className="relative"
+              onMouseEnter={() => setDropdownOpen(key)}
+              onMouseLeave={() => setDropdownOpen(null)}
+            >
+              <button className="flex items-center gap-1 hover:text-blue-600 transition">
+                {name}
+                <span className="text-xs">▾</span>
+              </button>
 
-          <ul className="absolute hidden group-hover:block bg-white shadow-xl rounded-lg mt-3 p-3 space-y-1 min-w-[220px] z-50 border-t-4 border-yellow-500">
-            <li>
-              <Link to="/about/history" className="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-700 rounded transition-all duration-200">📖 ისტორია</Link>
-            </li>
-            <li>
-              <Link to="/about/mission" className="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-700 rounded transition-all duration-200">🎯 მისია / ხედვა</Link>
-            </li>
-            <li>
-              <Link to="/about/anthem" className="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-700 rounded transition-all duration-200">🎵 ჰიმნი / გერბი</Link>
-            </li>
-            <li>
-              <Link to="/about/staff" className="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-700 rounded transition-all duration-200">👥 ადმინისტრაცია</Link>
-            </li>
-          </ul>
-        </li>
+              <div
+                className={`absolute left-0 mt-2 w-56 bg-white shadow-lg rounded-md py-2 transition-all duration-200 ${
+                  dropdownOpen === key
+                    ? "opacity-100 visible translate-y-0"
+                    : "opacity-0 invisible -translate-y-2"
+                }`}
+              >
+                {links.map(link => (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ))}
 
-        <li>
-          <Link to="/administration" className="hover:text-yellow-300 transition-colors duration-200 border-b-2 border-transparent hover:border-yellow-300">
-            პედაგოგი
+          <Link to="/contact" className="hover:text-blue-600">
+            კონტაქტი
           </Link>
-        </li>
 
-        <li>
-          <Link to="/education" className="hover:text-yellow-300 transition-colors duration-200 border-b-2 border-transparent hover:border-yellow-300">
-            სასწავლო პროცესი
-          </Link>
-        </li>
-
-        <li>
-          <Link to="/documents" className="hover:text-yellow-300 transition-colors duration-200 border-b-2 border-transparent hover:border-yellow-300">
-            დოკუმენტაცია
-          </Link>
-        </li>
-
-        <li>
-          <Link to="/resources" className="hover:text-yellow-300 transition-colors duration-200 border-b-2 border-transparent hover:border-yellow-300">
-            რესურსები
-          </Link>
-        </li>
-
-      </ul>
-    </nav>
+        </nav>
+      </div>
+    </header>
   )
 }
