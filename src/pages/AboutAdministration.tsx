@@ -1,3 +1,5 @@
+import { schoolAsset } from "../config/assets"
+
 const administrationGoals = [
   "სასწავლო პროცესის ხარისხის მუდმივი გაუმჯობესება",
   "თანამედროვე საგანმანათლებლო მიდგომების დანერგვა",
@@ -6,19 +8,19 @@ const administrationGoals = [
 
 const administrationGalleryImages = [
   {
-    src: "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/teachers1.jpg",
+    src: schoolAsset("teachers1.jpg"),
     alt: "სკოლის ადმინისტრაციის გუნდი",
   },
   {
-    src: "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/teachers2.jpg",
+    src: schoolAsset("teachers2.jpg"),
     alt: "ადმინისტრაციისა და პედაგოგების თანამშრომლობა",
   },
   {
-    src: "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%93%E1%83%98/teachers3.jpg",
+    src: schoolAsset("teachers3.jpg"),
     alt: "სასკოლო გარემოში სამუშაო შეხვედრა",
   },
   {
-    src: "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%93%E1%83%98/teachers4.jpg",
+    src: schoolAsset("teachers4.jpg"),
     alt: "სკოლის პროფესიული გუნდის პორტრეტი",
   },
 ]

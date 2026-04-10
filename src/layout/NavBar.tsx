@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { Link, NavLink, useLocation } from "react-router-dom"
+import { schoolLogoUrl } from "../config/assets"
 
 type MenuItem = { label: string; href: string }
 type MenuGroup = { label: string; items: MenuItem[] }
@@ -154,11 +155,7 @@ export default function Navbar() {
           <div className="site-header__row">
             <Link to="/" className="site-brand" aria-label="Go to home" onClick={closeMenus}>
               <span className="site-brand__mark" aria-hidden="true">
-                <img
-                  src="https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/image-removebg-preview.png"
-                  alt=""
-                  className="site-brand__mark-image"
-                />
+                <img src={schoolLogoUrl} alt="" className="site-brand__mark-image" />
               </span>
               <span className="site-brand__name">სკოლა ეტალონი</span>
             </Link>

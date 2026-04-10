@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom"
+import { schoolLogoUrl } from "../config/assets"
 import { schoolContact } from "../data/siteInfo"
-
-const logoUrl =
-  "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/image-removebg-preview.png"
 
 const quickLinks = [
   { label: "მთავარი", href: "/" },
@@ -28,7 +26,7 @@ export default function Footer() {
           <div className="site-footer__column">
             <div className="site-footer__brand">
               <span className="site-footer__brand-mark" aria-hidden="true">
-                <img src={logoUrl} alt="" className="site-footer__brand-image" />
+                <img src={schoolLogoUrl} alt="" className="site-footer__brand-image" />
               </span>
               <div>
                 <h3 className="site-footer__brand-name">სკოლა ეტალონი</h3>

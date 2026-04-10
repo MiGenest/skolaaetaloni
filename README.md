@@ -71,3 +71,9 @@ export default defineConfig([
   },
 ])
 ```
+
+## Asset Configuration
+
+R2-hosted assets are resolved through `VITE_PUBLIC_R2_BASE_URL`.
+
+Copy `.env.example` to `.env` and update the value only if the public R2 domain changes. Asset file paths in the app remain absolute and continue to point to the public `r2.dev` host.

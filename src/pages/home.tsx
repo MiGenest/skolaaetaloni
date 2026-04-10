@@ -1,13 +1,6 @@
 import { useEffect, useEffectEvent, useState } from "react"
+import { homeHeroImages } from "../config/assets"
 import { news } from "../data/mockData"
-
-const heroImages = [
-  "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/kids.jpg",
-  "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/teachers1.jpg",
-  "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/teachers2.jpg",
-  "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%93%E1%83%98/teachers3.jpg",
-  "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%93%E1%83%98/teachers4.jpg",
-]
 
 const highlights = [
   {
@@ -50,7 +43,7 @@ export default function Home() {
   const [activeHeroSlide, setActiveHeroSlide] = useState(0)
 
   const rotateHeroSlide = useEffectEvent(() => {
-    setActiveHeroSlide((current) => (current + 1) % heroImages.length)
+    setActiveHeroSlide((current) => (current + 1) % homeHeroImages.length)
   })
 
   useEffect(() => {
@@ -65,7 +58,7 @@ export default function Home() {
     <div className="home-page">
       <section className="home-hero">
         <div className="home-hero__media" aria-hidden="true">
-          {heroImages.map((image, index) => (
+          {homeHeroImages.map((image, index) => (
             <div
               key={image}
               className={`home-hero__slide${index === activeHeroSlide ? " is-active" : ""}`}

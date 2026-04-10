@@ -1,3 +1,5 @@
+import { schoolLogoUrl } from "../config/assets"
+
 const anthemParagraphs = [
   "სკოლის ჰიმნი წარმოადგენს ერთ-ერთ მნიშვნელოვან სიმბოლოს, რომელიც ასახავს სასწავლებლის სულს, ღირებულებებსა და ერთიანობას.",
   "ის აერთიანებს მოსწავლეებს, პედაგოგებსა და მთლიანად სკოლის საზოგადოებას საერთო იდეების, მიზნებისა და მომავლისკენ სწრაფვის გარშემო.",
@@ -13,9 +15,6 @@ const emblemParagraphs = [
   "გერბი არა მხოლოდ ვიზუალური ნიშანია, არამედ წარმოადგენს სკოლის ისტორიის, კულტურისა და მისწრაფებების ერთიან სიმბოლოს.",
   "ის აქტიურად გამოიყენება როგორც სასკოლო დოკუმენტაციაში, ასევე სხვადასხვა ოფიციალურ და არაოფიციალურ ღონისძიებებში.",
 ]
-
-const emblemImageUrl =
-  "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/image-removebg-preview.png"
 
 export default function AboutAnthemSymbol() {
   return (
@@ -61,7 +60,7 @@ export default function AboutAnthemSymbol() {
             <div className="anthem-emblem">
               <figure className="anthem-emblem__figure">
                 <img
-                  src={emblemImageUrl}
+                  src={schoolLogoUrl}
                   alt="შპს სკოლა ეტალონის გერბი"
                   className="anthem-emblem__image"
                   loading="lazy"
