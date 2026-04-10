@@ -77,12 +77,11 @@ export default function Home() {
         <div className="home-hero__glow home-hero__glow--orange" />
         <div className="home-hero__glow home-hero__glow--green" />
         <div className="home-shell home-hero__content">
-          <div className="home-hero__badge">თანამედროვე განათლება • სითბო • განვითარება</div>
+          <div className="home-hero__badge">ცოდნა • განვითარება • მომავალი</div>
           <h1 className="home-hero__title">სკოლა ეტალონი</h1>
           <p className="home-hero__subtitle">
             რეგიონის წამყვანი სკოლა, სადაც გამოცდილება, მზრუნველობა და განვითარების კულტურა ერთმანეთს ბუნებრივად ერწყმის.
           </p>
-          <button className="home-hero__button">დაიწყე ისწავლე →</button>
         </div>
       </section>
 
@@ -154,16 +153,14 @@ export default function Home() {
 
           <div className="home-grid home-grid--two">
             <article className="home-focus-card home-focus-card--green">
-              <span className="home-focus-card__icon">🎯</span>
-              <h3 className="home-focus-card__title">მისია</h3>
+              <h3 className="home-focus-card__title">🎯 მისია</h3>
               <p className="home-focus-card__text">
                 მრავალფეროვანი ფორმალური და არაფორმალური აქტივობებით, ვიზრუნოთ სწავლა-სწავლების ხარისხის მუდმივ განვითარებაზე და თანამედროვე სტანდარტების შესაბამისი განათლების დანერგვაზე.
               </p>
             </article>
 
             <article className="home-focus-card home-focus-card--orange">
-              <span className="home-focus-card__icon">👁️</span>
-              <h3 className="home-focus-card__title">ხედვა</h3>
+              <h3 className="home-focus-card__title">👁️ ხედვა</h3>
               <p className="home-focus-card__text">
                 რეგიონის წამყვანი სკოლა, რომელიც მოსწავლეებს ძლიერ აკადემიურ განათლებასთან ერთად ყოვლისმხრივ განვითარების რეალურ შესაძლებლობებს სთავაზობს.
               </p>

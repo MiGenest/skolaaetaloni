@@ -1,50 +1,79 @@
+const missionParagraphs = [
+  "სკოლის მისიაა მრავალფეროვანი ფორმალური და არაფორმალური აქტივობების საშუალებით უზრუნველყოს სწავლა-სწავლების ხარისხის უწყვეტი განვითარება და თანამედროვე საგანმანათლებლო სტანდარტების დანერგვა.",
+  "სკოლა ქმნის უსაფრთხო და მხარდაჭერაზე ორიენტირებულ გარემოს, სადაც აკადემიურ ცოდნასთან ერთად განსაკუთრებული ყურადღება ეთმობა თითოეული მოსწავლის უნარებისა და შესაძლებლობების აღმოჩენასა და განვითარებას.",
+]
+
+const values = [
+  { icon: "🤝", label: "თანამშრომლობა" },
+  { icon: "🧩", label: "გუნდურობა" },
+  { icon: "🛡️", label: "პასუხისმგებლობის გააზრება" },
+  { icon: "⚖️", label: "თანაბარი ხელმისაწვდომობა" },
+]
+
 export default function AboutMission() {
   return (
-    <div className="flex flex-col">
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-12 px-6">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold mb-4">მისია, ხედვა და ღირებულებები</h1>
-          <p className="text-blue-50">სკოლა ეტალონის სტრატეგიული მიმართულება</p>
+    <div className="mission-page">
+      <section className="mission-hero">
+        <div className="home-shell mission-hero__inner">
+          <span className="home-eyebrow home-eyebrow--light">მისია • ხედვა • ღირებულებები</span>
+          <h1 className="mission-hero__title">შპს „სკოლა ეტალონი“</h1>
+          <p className="mission-hero__subtitle">
+            სკოლის განვითარების ღირებულებითი ჩარჩო, რომელიც აერთიანებს აკადემიურ ხარისხს, მზრუნველ გარემოსა და
+            თანასწორ შესაძლებლობებს.
+          </p>
         </div>
       </section>
 
-      <div className="max-w-4xl mx-auto w-full px-6 py-12">
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold mb-4 text-blue-600">📋 მისია</h2>
-          <p className="text-gray-700 leading-relaxed text-lg">
-            მრავალფეროვანი ფორმალური და არაფორმალური აქტივობებით, იზრუნოს სწავლა-სწავლების ხარისხის მუდმივ განვითარებაზე და თანამედროვე სტანდარტების შესაბამისი განათლების დანერგვაზე, სადაც აკადემიურ ცოდნასთან ერთად, უსაფრთხო გარემოში მოსწავლეთა მრავალმხრივი შესაძლებლობების აღმოჩენა-რეალიზება იქნება პრიორიტეტული.
+      <section className="home-section mission-section">
+        <div className="home-shell mission-layout">
+          <p className="mission-section__intro">
+            თითოეული მიმართულება ემსახურება მოსწავლის სრულფასოვან განვითარებას და ქმნის საფუძველს ძლიერი,
+            პასუხისმგებლიანი და თავისუფლად მოაზროვნე თაობის აღსაზრდელად.
           </p>
-        </section>
 
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold mb-4 text-blue-600">🎯 ხედვა</h2>
-          <p className="text-gray-700 leading-relaxed text-lg">
-            სკოლის ხედვაა უახლოეს შვიდ წელიწადში გახდეს რეგიონში წამყვანი და მზარდი საგანმანათლებლო კერა, რომელიც მოსწავლეებს მისცემს საშუალებას ჩამოყალიბდნენ თავისუფალ, მოაზროვნე და კონკურენტუნარიან მოქალაქეებად.
-          </p>
-        </section>
+          <div className="mission-grid">
+            <section className="mission-card mission-card--mission" aria-labelledby="mission-heading">
+              <h2 id="mission-heading" className="mission-card__title">
+                მისია
+              </h2>
+              <div className="mission-card__copy">
+                {missionParagraphs.map((paragraph) => (
+                  <p key={paragraph} className="mission-card__text">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            </section>
 
-        <section>
-          <h2 className="text-3xl font-bold mb-6 text-blue-600">💎 ღირებულებები</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="p-6 bg-blue-50 rounded-lg border-l-4 border-blue-600">
-              <h3 className="text-lg font-semibold mb-2 text-blue-600">თანამშრომლობა</h3>
-              <p className="text-gray-700">ერთი გაერთიანებული გუნდის სახით ვმუშაობთ მოსწავლეთა വუნდობის მიღწევაზე</p>
-            </div>
-            <div className="p-6 bg-green-50 rounded-lg border-l-4 border-green-600">
-              <h3 className="text-lg font-semibold mb-2 text-green-600">გუნდურობა</h3>
-              <p className="text-gray-700">ერთი ჯანი უფრო ძლიერია, ვიდრე ერთი ხელი - ამაში სწამთ ჩვენ</p>
-            </div>
-            <div className="p-6 bg-purple-50 rounded-lg border-l-4 border-purple-600">
-              <h3 className="text-lg font-semibold mb-2 text-purple-600">პასუხისმგებლობა</h3>
-              <p className="text-gray-700">საკუთარი მოქმედებების, სიტყვების და გადაწყვეტილებების საჭირო მოსამსახურეობა</p>
-            </div>
-            <div className="p-6 bg-orange-50 rounded-lg border-l-4 border-orange-600">
-              <h3 className="text-lg font-semibold mb-2 text-orange-600">თანაბარი ხელმისაწვდომობა</h3>
-              <p className="text-gray-700">ყველა მოსწავლე უნდა იმყოფებოდეს თანაბარი შესაძლებლობის პირობებში</p>
-            </div>
+            <section className="mission-card mission-card--vision" aria-labelledby="vision-heading">
+              <h2 id="vision-heading" className="mission-card__title">
+                ხედვა
+              </h2>
+              <p className="mission-card__text">
+                სკოლის ხედვაა უახლოესი შვიდი წლის განმავლობაში ჩამოყალიბდეს რეგიონში წამყვან და მზარდ
+                საგანმანათლებლო ცენტრად, რომელიც მოსწავლეებს მისცემს შესაძლებლობას გახდნენ თავისუფლად მოაზროვნე,
+                პასუხისმგებლიანი და კონკურენტუნარიანი მოქალაქეები.
+              </p>
+            </section>
+
+            <section className="mission-card mission-card--values" aria-labelledby="values-heading">
+              <h2 id="values-heading" className="mission-card__title">
+                ღირებულებები
+              </h2>
+              <ul className="mission-values-list">
+                {values.map((value) => (
+                  <li key={value.label} className="mission-values-list__item">
+                    <span className="mission-values-list__icon" aria-hidden="true">
+                      {value.icon}
+                    </span>
+                    <span className="mission-values-list__label">{value.label}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
     </div>
   )
 }

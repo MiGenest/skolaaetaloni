@@ -16,21 +16,8 @@ const menu: MenuGroup[] = [
     ],
   },
   {
-    label: "სასწავლო პროცესი",
-    items: [
-      { label: "მიმოხილვა", href: "/education" },
-      { label: "ქართული ენა", href: "/education/georgian" },
-      { label: "მეცნიერება", href: "/education/technical" },
-      { label: "უცხო ენები", href: "/education/languages" },
-    ],
-  },
-  {
     label: "დოკუმენტაცია",
     items: [{ label: "ყველა დოკუმენტი", href: "/documents" }],
-  },
-  {
-    label: "რესურსები",
-    items: [{ label: "სასწავლო რესურსები", href: "/resources" }],
   },
 ]
 
@@ -238,24 +225,8 @@ export default function Navbar() {
                     </li>
                   )
                 })}
-
-                <li className="site-nav__item">
-                  <NavLink
-                    to="/portal"
-                    className={({ isActive }) =>
-                      `site-nav__link${isActive ? " is-active" : ""}`
-                    }
-                    onClick={closeMenus}
-                  >
-                    პორტალი
-                  </NavLink>
-                </li>
               </ul>
             </nav>
-
-            <Link to="/portal" className="site-header__cta" onClick={closeMenus}>
-              დაგვიკავშირდით
-            </Link>
           </div>
         </div>
       </header>

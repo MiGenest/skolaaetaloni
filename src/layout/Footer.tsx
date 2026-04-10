@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import { schoolContact } from "../data/siteInfo"
 
 const logoUrl =
   "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/image-removebg-preview.png"
@@ -38,9 +39,16 @@ export default function Footer() {
             </div>
 
             <div className="site-footer__meta">
-              <p>📍 ბორჯომი, საქართველო</p>
-              <p>📧 etalon2015@gmail.com</p>
-              <p>📞 +995 595 12 34 56</p>
+              <p>📍 {schoolContact.addressWithPostalCode}</p>
+              <p>
+                📧{" "}
+                <a href={`mailto:${schoolContact.email}`} className="site-footer__link">
+                  {schoolContact.email}
+                </a>
+              </p>
+              {schoolContact.phones.map((phone) => (
+                <p key={phone}>📞 {phone}</p>
+              ))}
             </div>
           </div>
 
@@ -73,19 +81,32 @@ export default function Footer() {
           <div className="site-footer__column">
             <h3 className="site-footer__heading">დაგვიკავშირდით</h3>
             <div className="site-footer__socials">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="site-footer__social">
-                f
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="site-footer__social">
-                📷
-              </a>
-              <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer" className="site-footer__social">
-                💬
+              <a
+                href={schoolContact.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="site-footer__social"
+                aria-label="Facebook"
+              >
+                Fb
               </a>
             </div>
-            <p className="site-footer__note">
-              მოგვწერეთ სოციალური მედიის არხებში, რომ ახალი სიახლეები და ღონისძიებები არ გამოგრჩეთ.
-            </p>
+            <ul className="site-footer__contact-list">
+              <li>
+                <span>მისამართი:</span> {schoolContact.addressWithPostalCode}
+              </li>
+              <li>
+                <span>ელ-ფოსტა:</span>{" "}
+                <a href={`mailto:${schoolContact.email}`} className="site-footer__link">
+                  {schoolContact.email}
+                </a>
+              </li>
+              {schoolContact.phones.map((phone) => (
+                <li key={phone}>
+                  <span>ტელეფონი:</span> {phone}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
@@ -95,7 +116,7 @@ export default function Footer() {
           <p>
             &copy; {currentYear} <span>სკოლა ეტალონი</span>. ყველა უფლება დაცულია.
           </p>
-          <p>მხარდაჭერა: etalon2015@gmail.com</p>
+          <p>მხარდაჭერა: {schoolContact.email}</p>
           <p>საგანმანათლებლო სივრცე, სადაც მზრუნველობა და პროგრესი ერთად ვითარდება.</p>
         </div>
       </div>

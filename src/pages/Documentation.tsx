@@ -1,67 +1,261 @@
-import DocumentCard from "../components/DocumentCard"
-import { documents } from "../data/mockData"
+import { useEffect, useState } from "react"
 
-export default function Documentation() {
-  const handleDownload = (url: string) => {
-    console.log("Downloading:", url)
-    // In production, this would trigger actual download
+type SchoolDocument = {
+  id: string
+  title: string
+  url: string
+  type: "pdf" | "spreadsheet"
+  description: string
+}
+
+const previewUnavailableMessage = "Document preview not available"
+
+const schoolDocuments: SchoolDocument[] = [
+  {
+    id: "school-structure",
+    title: "სკოლის სტრუქტურა",
+    url: "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/.%E1%83%A1%E1%83%99%E1%83%9D%E1%83%9A%E1%83%98%E1%83%A1%20%E1%83%A1%E1%83%A2%E1%83%A0%E1%83%A3%E1%83%A5%E1%83%A2%E1%83%A3%E1%83%A0%E1%83%90.pdf",
+    type: "pdf",
+    description: "სასკოლო სტრუქტურის მიმოხილვა",
+  },
+  {
+    id: "action-report-2024-2025",
+    title: "2024-2025 სასწავლო წლის სამოქმედო გეგმის ანგარიში",
+    url: "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/2024-2025%20%E1%83%A1%E1%83%90%E1%83%A1%E1%83%AC.%20%E1%83%AC%E1%83%9A%E1%83%98%E1%83%A1%20%E1%83%A1%E1%83%90%E1%83%9B%E1%83%9D%E1%83%A5%E1%83%9B%E1%83%94%E1%83%93%E1%83%9D%20%E1%83%92%E1%83%94%E1%83%92%E1%83%9B%E1%83%98%E1%83%A1%20%20%20%E1%83%90%E1%83%9C%E1%83%92%E1%83%90%E1%83%A0%E1%83%98%E1%83%A8%E1%83%98.pdf",
+    type: "pdf",
+    description: "სასწავლო წლის შესრულებული ნაბიჯების ანგარიში",
+  },
+  {
+    id: "book-selection",
+    title: "წიგნების შერჩევა",
+    url: "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/2026%202_22.1%20Selection%20of%20books%20_.pdf",
+    type: "pdf",
+    description: "სასწავლო წიგნების შერჩევის დოკუმენტი",
+  },
+  {
+    id: "student-mobility-status",
+    title: "მოსწავლის ჩარიცხვის, საფეხურის დაძლევის და მობილობის სტატუსის შეჩერების მექანიზმი",
+    url: "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/6.-%E1%83%9B%E1%83%9D%E1%83%A1%E1%83%AC%E1%83%90%E1%83%95%E1%83%9A%E1%83%98%E1%83%A1-%E1%83%A9%E1%83%90%E1%83%A0%E1%83%98%E1%83%AA%E1%83%AE%E1%83%95%E1%83%98%E1%83%A1-%E1%83%A1%E1%83%90%E1%83%A4%E1%83%94%E1%83%AE%E1%83%A3%E1%83%A0%E1%83%98%E1%83%A1-%E1%83%93%E1%83%90%E1%83%AB%E1%83%9A%E1%83%94%E1%83%95%E1%83%98%E1%83%A1-%E1%83%9B%E1%83%9D%E1%83%91%E1%83%98%E1%83%9A%E1%83%9D%E1%83%91%E1%83%98%E1%83%A1-%E1%83%A1%E1%83%A2%E1%83%90%E1%83%A2%E1%83%A3%E1%83%A1%E1%83%98%E1%83%A1-%E1%83%A8%E1%83%94%E1%83%A9%E1%83%94%E1%83%A0%E1%83%94%E1%83%91%E1%83%98%E1%83%A1-%E1%83%9B%E1%83%94%E1%83%A5%E1%83%90%E1%83%9C%E1%83%98%E1%83%96%E1%83%9B%E1%83%98.pdf",
+    type: "pdf",
+    description: "ჩარიცხვისა და მობილობის წესის მექანიზმი",
+  },
+  {
+    id: "budget-form-2025-2026",
+    title: "ბიუჯეტის ფორმა (2025-2026)",
+    url: "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/%E1%83%91%E1%83%98%E1%83%A3%E1%83%AF%E1%83%94%E1%83%A2%E1%83%98%E1%83%A1-%E1%83%A4%E1%83%9D%E1%83%A0%E1%83%9B%E1%83%90-2025-2026.xlsx",
+    type: "spreadsheet",
+    description: "ბიუჯეტის ფორმის Excel დოკუმენტი",
+  },
+  {
+    id: "etaloni-regulation",
+    title: "დებულება ეტალონი",
+    url: "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/%E1%83%93%E1%83%94%E1%83%91%E1%83%A3%E1%83%9A%E1%83%94%E1%83%91%E1%83%90%20%E1%83%94%E1%83%A2%E1%83%90%E1%83%9A%E1%83%9D%E1%83%9C%E1%83%98.pdf",
+    type: "pdf",
+    description: "სკოლის დებულება და ძირითადი წესები",
+  },
+  {
+    id: "legal-rights-protection",
+    title: "კანონით უფლებების დაცვა",
+    url: "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/%E1%83%99%E1%83%90%E1%83%9C%E1%83%9D%E1%83%9C%E1%83%98%E1%83%94%E1%83%A0%E1%83%98%20%E1%83%A3%E1%83%A4%E1%83%9A%E1%83%94%E1%83%91%E1%83%94%E1%83%91%E1%83%98%E1%83%A1%20%E1%83%93%E1%83%90%E1%83%AA%E1%83%95%E1%83%90.pdf",
+    type: "pdf",
+    description: "უფლებრივი დაცვის დოკუმენტი",
+  },
+  {
+    id: "student-adaptation-rule",
+    title: "მოსწავლეთა ადაპტაციის წესი",
+    url: "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/%E1%83%9B%E1%83%9D%E1%83%A1%E1%83%AC%E1%83%90%E1%83%95%E1%83%9A%E1%83%94%E1%83%97%E1%83%90%20%E1%83%90%E1%83%93%E1%83%90%E1%83%9E%E1%83%A2%E1%83%90%E1%83%AA%E1%83%98%E1%83%98%E1%83%A1%20%E1%83%AC%E1%83%94%E1%83%A1%E1%83%98.pdf",
+    type: "pdf",
+    description: "მოსწავლეთა ადაპტაციის წესები",
+  },
+  {
+    id: "action-plan-2024-25",
+    title: "სამოქმედო გეგმა 2024-25",
+    url: "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/%E1%83%A1%E1%83%90%E1%83%9B%E1%83%9D%E1%83%A5%E1%83%9B%E1%83%94%E1%83%93%E1%83%9D-%E1%83%92%E1%83%94%E1%83%92%E1%83%9B%E1%83%902024-25.pdf",
+    type: "pdf",
+    description: "2024-25 წლის სამოქმედო გეგმა",
+  },
+  {
+    id: "action-plan-2025-26",
+    title: "სამოქმედო გეგმა 2025-26",
+    url: "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/%E1%83%A1%E1%83%90%E1%83%9B%E1%83%9D%E1%83%A5%E1%83%9B%E1%83%94%E1%83%93%E1%83%9D-%E1%83%92%E1%83%94%E1%83%92%E1%83%9B%E1%83%902025-26%201.pdf",
+    type: "pdf",
+    description: "2025-26 წლის სამოქმედო გეგმა",
+  },
+  {
+    id: "school-curriculum-2025",
+    title: "სასკოლო სასწავლო გეგმა (2025)",
+    url: "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/%E1%83%A1%E1%83%90%E1%83%A1%E1%83%99%E1%83%9D%E1%83%9A%E1%83%9D%20%E1%83%A1%E1%83%90%E1%83%A1%E1%83%AC%E1%83%90%E1%83%95%E1%83%9A%E1%83%9D%20%E1%83%92%E1%83%94%E1%83%92%E1%83%9B%E1%83%90%20%E1%83%A8%E1%83%9E%E1%83%A1%20%E1%83%A1%E1%83%99%E1%83%9D%E1%83%9A%E1%83%90%20%E1%83%94%E1%83%A2%E1%83%90%E1%83%9A%E1%83%9D%E1%83%9C%E1%83%98%20-%202025.pdf",
+    type: "pdf",
+    description: "2025 წლის სასკოლო სასწავლო გეგმა",
+  },
+  {
+    id: "strategic-plan",
+    title: "სტრატეგიული გეგმა",
+    url: "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/%E1%83%A1%E1%83%A2%E1%83%A0%E1%83%90%E1%83%A2%E1%83%94%E1%83%92%E1%83%98%E1%83%A3%E1%83%9A%E1%83%98%20%E1%83%92%E1%83%94%E1%83%92%E1%83%9B%E1%83%90%20.pdf",
+    type: "pdf",
+    description: "სკოლის სტრატეგიული განვითარების გეგმა",
+  },
+  {
+    id: "internal-regulations-appendix-2",
+    title: "შინაგანაწესი (დანართი 2)",
+    url: "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/%E1%83%A8%E1%83%98%E1%83%9C%E1%83%90%E1%83%92%E1%83%90%E1%83%9C%E1%83%90%E1%83%AC%E1%83%94%E1%83%A1%E1%83%98-%E1%83%93%E1%83%90%E1%83%9C%E1%83%90%E1%83%A0%E1%83%97%E1%83%982.pdf",
+    type: "pdf",
+    description: "შინაგანაწესის დამატებითი დებულებები",
+  },
+  {
+    id: "human-resources-policy",
+    title: "ადამიანური რესურსების მართვის პოლიტიკა",
+    url: "https://pub-04f9b39b7aaa44769336ac3075a4bdfd.r2.dev/sket/%E1%83%90%E1%83%A1%E1%83%90%E1%83%A2%E1%83%95%E1%83%98%E1%83%A0%E1%83%97%E1%83%98%20%E1%83%95%E1%83%94%E1%83%91%20%E1%83%92%E1%83%95%E1%83%94%E1%83%A0%E1%83%93%E1%83%98/%E1%83%A8%E1%83%9E%E1%83%A1%20%E1%83%94%E1%83%A2%E1%83%90%E1%83%9A%E1%83%9D%E1%83%9C%E1%83%98%20%E1%83%90%E1%83%93%E1%83%90%E1%83%9B%E1%83%98%E1%83%90%E1%83%9C%E1%83%A3%E1%83%A0%E1%83%98%20%E1%83%A0%E1%83%94%E1%83%A1%E1%83%A3%E1%83%A0%E1%83%A1%E1%83%94%E1%83%91%E1%83%98%E1%83%A1%20%E1%83%9B%E1%83%90%E1%83%A0%E1%83%97%E1%83%95%E1%83%98%E1%83%A1%20%E1%83%9E%E1%83%9D%E1%83%9A%E1%83%98%E1%83%A2%E1%83%98%E1%83%99%E1%83%90%20%E1%83%93%E1%83%90%E1%83%9C%E1%83%90%E1%83%A0%E1%83%97%E1%83%983%2B.pdf",
+    type: "pdf",
+    description: "ადამიანური რესურსების მართვის პოლიტიკა",
+  },
+]
+
+function InlineDocumentPreview({
+  document,
+  isOpen,
+}: {
+  document: SchoolDocument
+  isOpen: boolean
+}) {
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [hasError, setHasError] = useState(false)
+
+  const previewUrl =
+    document.type === "spreadsheet"
+      ? `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(document.url)}`
+      : `${document.url}#toolbar=0&navpanes=0&view=FitH`
+
+  useEffect(() => {
+    if (!isOpen) {
+      setIsLoaded(false)
+      setHasError(false)
+      return
+    }
+
+    setIsLoaded(false)
+    setHasError(false)
+  }, [document.url, isOpen])
+
+  useEffect(() => {
+    if (!isOpen || isLoaded || hasError) {
+      return
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setHasError(true)
+    }, document.type === "spreadsheet" ? 12000 : 9000)
+
+    return () => window.clearTimeout(timeoutId)
+  }, [document.type, hasError, isLoaded, isOpen])
+
+  if (!isOpen) {
+    return null
   }
 
   return (
-    <div className="flex flex-col">
-      {/* HERO SECTION */}
-      <section className="bg-gradient-to-r from-purple-600 to-purple-800 text-white py-16 px-6">
-        <div className="max-w-5xl mx-auto">
-          <h1 className="text-4xl font-bold mb-4">დოკუმენტაცია</h1>
-          <p className="text-xl text-purple-50">აკადემიური დოკუმენტები, ფორმები და პოლიტიკა</p>
+    <div className="documentation-preview">
+      {!hasError ? (
+        <iframe
+          key={previewUrl}
+          src={previewUrl}
+          title={document.title}
+          className="documentation-preview__frame"
+          loading="lazy"
+          onLoad={() => {
+            setIsLoaded(true)
+            setHasError(false)
+          }}
+          onError={() => {
+            setHasError(true)
+          }}
+        />
+      ) : (
+        <div className="documentation-preview__fallback">{previewUnavailableMessage}</div>
+      )}
+
+      {!isLoaded && !hasError ? (
+        <div className="documentation-preview__status" aria-live="polite">
+          დოკუმენტი იტვირთება...
+        </div>
+      ) : null}
+    </div>
+  )
+}
+
+export default function Documentation() {
+  const [openDocumentId, setOpenDocumentId] = useState<string | null>(null)
+
+  return (
+    <div className="documentation-page">
+      <section className="documentation-hero">
+        <div className="home-shell documentation-hero__inner">
+          <span className="home-eyebrow home-eyebrow--light">დოკუმენტები • პოლიტიკა • გეგმები</span>
+          <h1 className="documentation-hero__title">დოკუმენტაცია</h1>
+          <p className="documentation-hero__subtitle">
+            ყველა ძირითადი სასკოლო დოკუმენტი ხელმისაწვდომია ამავე გვერდზე inline preview ფორმატში, ისე რომ
+            გახსნა და ნახვა შესაძლებელი იყოს დამატებითი გადმოწერის გარეშე.
+          </p>
         </div>
       </section>
 
-      {/* MAIN CONTENT */}
-      <div className="max-w-5xl mx-auto w-full px-6 py-12">
-        
-        {/* DESCRIPTION */}
-        <section className="mb-12">
-          <p className="text-lg text-gray-700 leading-relaxed">
-            ქვემოთ მოთავსებულია ყველა აუცილებელი სასკოლო დოკუმენტი, მათ შორის აკადემიური კალენდარი, მოსწავლეთა წესდებელი, მშობლების ინფორმაცია და აკადემიური სტანდარტები. თითოეული დოკუმენტი PDF ფორმატში ხელმისაწვდომია.
-          </p>
-        </section>
+      <section className="home-section documentation-section">
+        <div className="documentation-shell documentation-layout">
+          <section className="documentation-intro-card">
+            <p className="documentation-intro-card__text">
+              ჩამონათვალში პირველ ეტაპზე მხოლოდ დოკუმენტების სათაურებია ნაჩვენები. სასურველი ფაილის გახსნისას
+              გამოჩნდება დიდი, სრული სიგანის preview არეალი, რომელიც კომფორტულ კითხვას უზრუნველყოფს როგორც
+              დესკტოპზე, ისე მობილურზე.
+            </p>
+          </section>
 
-        {/* DOCUMENTS GRID */}
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold mb-8 text-gray-800">სხვადსხვა დოკუმენტი</h2>
-          <div className="space-y-4">
-            {documents.map((doc) => (
-              <DocumentCard
-                key={doc.id}
-                title={doc.title}
-                description={doc.description}
-                fileSize={doc.fileSize}
-                onDownload={() => handleDownload(doc.url)}
-              />
-            ))}
-          </div>
-        </section>
+          <section className="documentation-list" aria-label="სასკოლო დოკუმენტების სია">
+            {schoolDocuments.map((document, index) => {
+              const isOpen = openDocumentId === document.id
 
-        {/* CATEGORIES */}
-        <section>
-          <h2 className="text-2xl font-bold mb-8 text-gray-800">დოკუმენტის კატეგორიები</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 bg-blue-50 rounded-lg">
-              <h3 className="font-semibold text-lg mb-2 text-blue-600">📋 აკადემიური</h3>
-              <p className="text-gray-700">განრიგი, სტანდარტები და აკადემიური პოლიტიკა</p>
-            </div>
-            <div className="p-6 bg-green-50 rounded-lg">
-              <h3 className="font-semibold text-lg mb-2 text-green-600">👥 მოსწავლე</h3>
-              <p className="text-gray-700">მოსწავლეთა წესდებელი და უფლებები</p>
-            </div>
-            <div className="p-6 bg-orange-50 rounded-lg">
-              <h3 className="font-semibold text-lg mb-2 text-orange-600">👨‍👩‍👧 მშობელი</h3>
-              <p className="text-gray-700">მშობლების ინფორმაცია და კომუნიკაცია</p>
-            </div>
-          </div>
-        </section>
-      </div>
+              return (
+                <article key={document.id} className={`documentation-card${isOpen ? " is-open" : ""}`}>
+                  <button
+                    type="button"
+                    className="documentation-card__toggle"
+                    aria-expanded={isOpen}
+                    aria-controls={`document-panel-${document.id}`}
+                    onClick={() => {
+                      setOpenDocumentId((currentOpenId) => (currentOpenId === document.id ? null : document.id))
+                    }}
+                  >
+                    <span
+                      className={`documentation-card__filetype documentation-card__filetype--${document.type}`}
+                    >
+                      {document.type === "spreadsheet" ? "XLSX" : "PDF"}
+                    </span>
+
+                    <span className="documentation-card__heading">
+                      <span className="documentation-card__title">
+                        {index + 1}. {document.title}
+                      </span>
+                    </span>
+
+                    <span className="documentation-card__chevron" aria-hidden="true">
+                      ▾
+                    </span>
+                  </button>
+
+                  {isOpen ? (
+                    <div id={`document-panel-${document.id}`} className="documentation-card__body">
+                      <p className="documentation-card__meta">
+                        {document.type === "spreadsheet" ? "XLSX inline preview" : "PDF inline preview"} •{" "}
+                        {document.description}
+                      </p>
+                      <InlineDocumentPreview document={document} isOpen={isOpen} />
+                    </div>
+                  ) : null}
+                </article>
+              )
+            })}
+          </section>
+        </div>
+      </section>
     </div>
   )
 }
