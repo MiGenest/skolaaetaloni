@@ -2,7 +2,7 @@ export const schoolContact = {
   address: "საქართველო, სიღნაღის მუნიციპალიტეტი, ქ. წნორი, ერეკლე II-ის ქ. №24",
   addressWithPostalCode:
     "საქართველო, სიღნაღის მუნიციპალიტეტი, ქ. წნორი, ერეკლე II-ის ქ. №24 (4216)",
-  phones: ["+995 577 955 335", "(599) 22 29 90", "(599) 79 11 90"],
+  phones: ["(599) 22 29 90", "(599) 79 11 90"],
   email: "skolaetaloni@gmail.com",
   facebook: "https://www.facebook.com/skolaetaloni",
   category: "კერძო სკოლა (შპს „სკოლა ეტალონი“)",
@@ -10,7 +10,7 @@ export const schoolContact = {
 
 export const schoolPersonnel = [
   {
-    name: "საშიკო ტუხაშვილი",
+    name: "საშა ლეკიაშვილი",
     position: "დირექტორი",
     phone: schoolContact.phones[0],
     email: schoolContact.email,
@@ -25,8 +25,8 @@ export const schoolPersonnel = [
   },
   {
     name: "მანანა კაკაშვილი",
-    position: "საქმეთა მმართველი",
-    phone: schoolContact.phones[2],
+    position: "სასწავლო ნაწილი",
+    phone: schoolContact.phones[1],
     email: schoolContact.email,
     bio: "ადმინისტრაციული და საოპერაციო პროცესების ორგანიზებაზე პასუხისმგებელი.",
   },
